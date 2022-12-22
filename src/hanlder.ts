@@ -13,14 +13,24 @@ const errorHandler = (error: { message: string; status: any }) => {
 
 router.get("/tasks", async () => {
    const { data } = await client.from("tasks").select();
-   return new Response(JSON.stringify(data));
+   return new Response(JSON.stringify(data), {
+      headers: {
+         "content-type": "application/json",
+         "Access-Control-Allow-Origin": "*",
+      },
+   });
 });
 
 router.get("/tasks/:id", async ({ params }) => {
    const { id } = params;
    const { data } = await client.from("tasks").select().eq("id", id);
    const task = data?.length ? data[0] : null;
-   return new Response(JSON.stringify(task));
+   return new Response(JSON.stringify(task), {
+      headers: {
+         "content-type": "application/json",
+         "Access-Control-Allow-Origin": "*",
+      },
+   });
 });
 
 router.post("/tasks", async (request) => {
@@ -28,7 +38,12 @@ router.post("/tasks", async (request) => {
    let task = await request.json();
    task = { ...task, createdat: date };
    const { data, error } = await client.from("tasks").insert([task]).select();
-   return new Response(JSON.stringify(data ? data : { error: error.message }));
+   return new Response(JSON.stringify(data ? data : { error: error.message }), {
+      headers: {
+         "content-type": "application/json",
+         "Access-Control-Allow-Origin": "*",
+      },
+   });
 });
 
 router.post("/tasks/update/:id", async (request) => {
@@ -39,13 +54,23 @@ router.post("/tasks/update/:id", async (request) => {
       .update(task)
       .eq("id", id)
       .select();
-   return new Response(JSON.stringify(data ? data : { error: error.message }));
+   return new Response(JSON.stringify(data ? data : { error }), {
+      headers: {
+         "content-type": "application/json",
+         "Access-Control-Allow-Origin": "*",
+      },
+   });
 });
 
 router.delete("/tasks/:id", async ({ params }) => {
    const { id } = params;
    const { data } = await client.from("tasks").delete().eq("id", id);
-   return new Response(JSON.stringify(data));
+   return new Response(JSON.stringify(data), {
+      headers: {
+         "content-type": "application/json",
+         "Access-Control-Allow-Origin": "*",
+      },
+   });
 });
 
 router.all("*", () => new Response("Not Found.", { status: 404 }));
