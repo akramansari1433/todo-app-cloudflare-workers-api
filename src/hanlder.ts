@@ -15,7 +15,7 @@ router.get("/tasks", async () => {
    const { data } = await client.from("tasks").select();
    return new Response(JSON.stringify(data), {
       headers: {
-         "content-type": "application/json",
+         "Content-Type": "application/json",
          "Access-Control-Allow-Origin": "*",
       },
    });
@@ -27,7 +27,7 @@ router.get("/tasks/:id", async ({ params }) => {
    const task = data?.length ? data[0] : null;
    return new Response(JSON.stringify(task), {
       headers: {
-         "content-type": "application/json",
+         "Content-Type": "application/json",
          "Access-Control-Allow-Origin": "*",
       },
    });
@@ -40,8 +40,9 @@ router.post("/tasks", async (request) => {
    const { data, error } = await client.from("tasks").insert([task]).select();
    return new Response(JSON.stringify(data ? data : { error: error.message }), {
       headers: {
-         "content-type": "application/json",
+         "Content-Type": "application/json",
          "Access-Control-Allow-Origin": "*",
+         "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
       },
    });
 });
@@ -56,7 +57,7 @@ router.post("/tasks/update/:id", async (request) => {
       .select();
    return new Response(JSON.stringify(data ? data : { error }), {
       headers: {
-         "content-type": "application/json",
+         "Content-Type": "application/json",
          "Access-Control-Allow-Origin": "*",
       },
    });
@@ -67,7 +68,7 @@ router.delete("/tasks/:id", async ({ params }) => {
    const { data } = await client.from("tasks").delete().eq("id", id);
    return new Response(JSON.stringify(data), {
       headers: {
-         "content-type": "application/json",
+         "Content-Type": "application/json",
          "Access-Control-Allow-Origin": "*",
       },
    });
