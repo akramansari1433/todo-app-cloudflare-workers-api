@@ -3,7 +3,7 @@ import { PostgrestClient } from "@supabase/postgrest-js";
 
 const router = Router();
 const client = new PostgrestClient(
-   "https://impacts-fallen-pipe-buy.trycloudflare.com"
+   "https://part-tattoo-detection-nintendo.trycloudflare.com"
 );
 
 const errorHandler = (error: { message: string; status: any }) => {
