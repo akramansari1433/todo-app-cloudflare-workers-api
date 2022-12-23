@@ -1,9 +1,16 @@
 import { Router } from "itty-router";
 import { PostgrestClient } from "@supabase/postgrest-js";
 
+const corsHeaders = {
+   "Access-Control-Allow-Origin": "*",
+   "Content-Type": "application/json",
+   "Access-Control-Allow-Methods": "GET, PUT, POST",
+   "Access-Control-Max-Age": "86400",
+};
+
 const router = Router();
 const client = new PostgrestClient(
-   "https://part-tattoo-detection-nintendo.trycloudflare.com"
+   "https://bookings-lloyd-enrolled-dock.trycloudflare.com"
 );
 
 const errorHandler = (error: { message: string; status: any }) => {
@@ -14,10 +21,7 @@ const errorHandler = (error: { message: string; status: any }) => {
 router.get("/tasks", async () => {
    const { data } = await client.from("tasks").select();
    return new Response(JSON.stringify(data), {
-      headers: {
-         "Content-Type": "application/json",
-         "Access-Control-Allow-Origin": "*",
-      },
+      headers: { ...corsHeaders },
    });
 });
 
@@ -26,10 +30,7 @@ router.get("/tasks/:id", async ({ params }) => {
    const { data } = await client.from("tasks").select().eq("id", id);
    const task = data?.length ? data[0] : null;
    return new Response(JSON.stringify(task), {
-      headers: {
-         "Content-Type": "application/json",
-         "Access-Control-Allow-Origin": "*",
-      },
+      headers: { ...corsHeaders },
    });
 });
 
@@ -39,11 +40,7 @@ router.post("/tasks", async (request) => {
    task = { ...task, createdat: date };
    const { data, error } = await client.from("tasks").insert([task]).select();
    return new Response(JSON.stringify(data ? data : { error: error.message }), {
-      headers: {
-         "Content-Type": "application/json",
-         "Access-Control-Allow-Origin": "*",
-         "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
-      },
+      headers: { ...corsHeaders },
    });
 });
 
@@ -56,10 +53,7 @@ router.post("/tasks/update/:id", async (request) => {
       .eq("id", id)
       .select();
    return new Response(JSON.stringify(data ? data : { error }), {
-      headers: {
-         "Content-Type": "application/json",
-         "Access-Control-Allow-Origin": "*",
-      },
+      headers: { ...corsHeaders },
    });
 });
 
@@ -67,10 +61,7 @@ router.delete("/tasks/:id", async ({ params }) => {
    const { id } = params;
    const { data } = await client.from("tasks").delete().eq("id", id);
    return new Response(JSON.stringify(data), {
-      headers: {
-         "Content-Type": "application/json",
-         "Access-Control-Allow-Origin": "*",
-      },
+      headers: { ...corsHeaders },
    });
 });
 
