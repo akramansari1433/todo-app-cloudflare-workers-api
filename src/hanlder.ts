@@ -4,13 +4,13 @@ import { PostgrestClient } from "@supabase/postgrest-js";
 const corsHeaders = {
    "Access-Control-Allow-Origin": "*",
    "Content-Type": "application/json",
-   "Access-Control-Allow-Methods": "GET, PUT, POST",
+   "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE",
    "Access-Control-Max-Age": "86400",
 };
 
 const router = Router();
 const client = new PostgrestClient(
-   "https://bookings-lloyd-enrolled-dock.trycloudflare.com"
+   "https://grants-vhs-sees-dictionaries.trycloudflare.com"
 );
 
 const errorHandler = (error: { message: string; status: any }) => {
@@ -19,7 +19,10 @@ const errorHandler = (error: { message: string; status: any }) => {
 };
 
 router.get("/tasks", async () => {
-   const { data } = await client.from("tasks").select();
+   const { data } = await client
+      .from("tasks")
+      .select()
+      .order("createdat", { ascending: false });
    return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders },
    });
