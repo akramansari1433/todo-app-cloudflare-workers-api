@@ -59,13 +59,16 @@ router.post("/tasks/update/:id", async (request) => {
       headers: { ...corsHeaders },
    });
 });
-
-router.delete("/tasks/:id", async ({ params }) => {
+//delete methods no working
+router.get("/tasks/delete/:id", async ({ params }) => {
    const { id } = params;
-   const { data } = await client.from("tasks").delete().eq("id", id);
-   return new Response(JSON.stringify(data), {
-      headers: { ...corsHeaders },
-   });
+   await client.from("tasks").delete().eq("id", id);
+   return new Response(
+      JSON.stringify({ message: "Task deleted successfully" }),
+      {
+         headers: { ...corsHeaders },
+      }
+   );
 });
 
 router.all("*", () => new Response("Not Found.", { status: 404 }));
