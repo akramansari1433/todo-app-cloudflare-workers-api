@@ -14,6 +14,7 @@ jobs:
           node-version: 18
           cache: 'npm'
       - run: npm ci
+      - run: echo "${{secrets.CF_API_TOKEN}}"
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0
         with:
