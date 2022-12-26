@@ -17,5 +17,6 @@ jobs:
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          apiToken: n0uPB1QVDuEJEpGDv50rr6Sx0MPzelQfEcQOtfKw
+          apiToken: 'n0uPB1QVDuEJEpGDv50rr6Sx0MPzelQfEcQOtfKw'
+          wranglerVersion: '2.1.15'
 
