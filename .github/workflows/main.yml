@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      - uses: actions/checkout@v1
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
       - run: npm i
-      - name: Publish
+      - uses: actions/checkout@v1
+      - name: wrangler publish
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
