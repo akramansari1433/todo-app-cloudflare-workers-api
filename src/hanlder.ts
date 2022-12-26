@@ -10,7 +10,7 @@ const corsHeaders = {
 
 const router = Router();
 const client = new PostgrestClient(
-   "https://grants-vhs-sees-dictionaries.trycloudflare.com"
+   "https://belong-wesley-iceland-answering.trycloudflare.com"
 );
 
 const errorHandler = (error: { message: string; status: any }) => {
