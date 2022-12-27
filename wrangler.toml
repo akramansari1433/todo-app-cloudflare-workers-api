@@ -2,3 +2,7 @@ name = "postgrest-worker-example"
 main = "src/index.ts"
 compatibility_date = "2022-12-22"
 account_id = "6c83f39a84ff75d196a5ba826b708b6d"
+[[ d1_databases ]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "todos"
+database_id = "17d3e129-3041-44f4-85d4-b2db735f804e"
