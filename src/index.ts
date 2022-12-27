@@ -3,6 +3,12 @@ export interface Env {
    DB: D1Database;
 }
 
+export const corsHeaders = {
+   "Access-Control-Allow-Origin": "*",
+   "Access-Control-Allow-Methods": "GET, PUT, POST,DELETE",
+   "Access-Control-Max-Age": "86400",
+};
+
 export default {
    async fetch(request: Request, env: Env) {
       const router = Router();
@@ -10,8 +16,7 @@ export default {
       const { DB } = env;
       router.get("/tasks", async () => {
          const { results } = await DB.prepare("SELECT * FROM todos").all();
-
-         return Response.json(results);
+         return Response.json(results, { headers: { ...corsHeaders } });
       });
 
       router.post("/tasks", async (request) => {
@@ -22,9 +27,15 @@ export default {
             .bind(task.id, task.task)
             .run();
          if (success) {
-            return Response.json({ message: " Task created successfully" });
+            return Response.json(
+               { message: " Task created successfully" },
+               { headers: { ...corsHeaders } }
+            );
          } else {
-            return Response.json({ error: "Something went wrong" });
+            return Response.json(
+               { error: "Something went wrong" },
+               { headers: { ...corsHeaders } }
+            );
          }
       });
 
@@ -36,9 +47,15 @@ export default {
             .bind(id)
             .run();
          if (success) {
-            return Response.json({ message: "Task marked completed" });
+            return Response.json(
+               { message: "Task marked completed" },
+               { headers: { ...corsHeaders } }
+            );
          } else {
-            return Response.json({ error: "Something went wrong" });
+            return Response.json(
+               { error: "Something went wrong" },
+               { headers: { ...corsHeaders } }
+            );
          }
       });
 
@@ -48,13 +65,26 @@ export default {
             .bind(id)
             .run();
          if (success) {
-            return Response.json({ message: "Task deleted" });
+            return Response.json(
+               { message: "Task deleted" },
+               { headers: { ...corsHeaders } }
+            );
          } else {
-            return Response.json({ error: "Something went wrong" });
+            return Response.json(
+               { error: "Something went wrong" },
+               { headers: { ...corsHeaders } }
+            );
          }
       });
 
-      router.all("*", () => new Response("Not Found.", { status: 404 }));
+      router.all(
+         "*",
+         () =>
+            new Response("Not Found.", {
+               status: 404,
+               headers: { ...corsHeaders },
+            })
+      );
 
       return router.handle(request, env);
    },
