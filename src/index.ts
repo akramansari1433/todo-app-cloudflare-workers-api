@@ -22,7 +22,7 @@ export default {
             .bind(task.id, task.task)
             .run();
          if (success) {
-            return Response.json({ message: "Created" });
+            return Response.json({ message: " Task created successfully" });
          } else {
             return Response.json({ error: "Something went wrong" });
          }
@@ -36,7 +36,7 @@ export default {
             .bind(id)
             .run();
          if (success) {
-            return Response.json({ message: "Marked Completed" });
+            return Response.json({ message: "Task marked completed" });
          } else {
             return Response.json({ error: "Something went wrong" });
          }
@@ -48,7 +48,7 @@ export default {
             .bind(id)
             .run();
          if (success) {
-            return Response.json({ message: "Deleted" });
+            return Response.json({ message: "Task deleted" });
          } else {
             return Response.json({ error: "Something went wrong" });
          }
