@@ -8,7 +8,6 @@ export const corsHeaders = {
     "Access-Control-Allow-Methods": "GET, PUT, POST,DELETE",
     "Access-Control-Max-Age": "86400",
 };
-//test github actions
 export default {
     async fetch(request: Request, env: Env) {
         const router = Router();
